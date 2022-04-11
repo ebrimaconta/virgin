@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
 import { Header } from '../../Display/Display';
 
 const InputPrice = styled.input`
@@ -10,16 +11,17 @@ const InputPrice = styled.input`
 `;
 
 function InputPricingFn({ setData, inputPricing, setInputPricing, dataFromApi }) {
+  useEffect(() => {
+    console.log('checking', inputPricing);
+  }, [inputPricing]);
   return (
     <>
       <Header>Price per person</Header>
       <InputPrice
         type='number'
-        className=''
-        value={inputPricing}
+        defaultValue={inputPricing}
         min={0}
         onChange={(event) => {
-          setInputPricing(event.target.value);
           setData((prevState) => {
             if (event.target.value) {
               const filterArr = prevState.filter((arr) => event.target.value <= arr.pricePerPerson);
@@ -27,8 +29,9 @@ function InputPricingFn({ setData, inputPricing, setInputPricing, dataFromApi })
             }
             return dataFromApi;
           });
+          setInputPricing(event.target.value);
         }}
-        placeholder='Price Per Person'
+        placeholder='Type...'
       />
     </>
   );

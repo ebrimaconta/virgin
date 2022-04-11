@@ -85,8 +85,9 @@ function Display() {
   }, []);
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const propsRating = {
+  const propsRatingNHotel = {
     setData: setData,
     inputPrice: inputPricing,
     selectHotelFacilities: selectHotelFacilities,
@@ -101,13 +102,6 @@ function Display() {
     setInputPricing: setInputPricing,
     dataFromApi: dataFromApi,
   };
-  const propsHotel = {
-    setData: setData,
-    inputPrice: inputPricing,
-    setInputPricing: setInputPricing,
-    dataFromApi: dataFromApi,
-    setSelectHotelFacilities: setSelectHotelFacilities,
-  };
 
   if (loading) {
     return (
@@ -120,13 +114,13 @@ function Display() {
     <>
       <FilterContainter>
         <SubContainter>
-          <SelectRatingFn {...propsRating} />
+          <SelectRatingFn {...propsRatingNHotel} />
         </SubContainter>{' '}
         <SubContainter>
           <InputPricingFn {...propsPricing} />
         </SubContainter>
         <SubContainter>
-          <SelectHotelFacilitiesFn {...propsHotel} />
+          <SelectHotelFacilitiesFn {...propsRatingNHotel} />
         </SubContainter>
         <SubContainter>
           <ResetButton

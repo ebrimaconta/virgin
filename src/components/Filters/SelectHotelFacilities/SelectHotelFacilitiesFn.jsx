@@ -1,8 +1,14 @@
 import { Header } from '../../Display/Display';
-
 import ReactSelect from 'react-select';
 
-function SelectHotelFacilitiesFn({ setData, setSelectHotelFacilities, selectHotelFacilities, dataFromApi }) {
+function SelectHotelFacilitiesFn({
+  setData,
+  inputPrice,
+  selectRating,
+  setSelectHotelFacilities,
+  selectHotelFacilities,
+  dataFromApi,
+}) {
   const options = [
     { value: 'Restaurant', label: 'Restaurant' },
     { value: 'Bar', label: 'Bar' },
@@ -11,25 +17,24 @@ function SelectHotelFacilitiesFn({ setData, setSelectHotelFacilities, selectHote
     { value: 'Fitness Centre/Gym', label: 'Fitness Centre/Gym' },
     { value: 'Laundry Service', label: 'Laundry Service' },
   ];
-  console.log('checking', selectHotelFacilities);
+
   return (
     <>
       <Header>Hotel facilities</Header>
       <ReactSelect
-        value={selectHotelFacilities}
         options={options}
         onChange={(event) => {
-          setSelectHotelFacilities(event);
-          setData(() => {
-            const filterArr = dataFromApi.filter((arr) => {
-              const mapArr = event.map((item) => item.value);
-              if (mapArr.length) {
-                return arr.hotel.content.hotelFacilities.some((item) => mapArr.includes(item));
-              }
+          setData((prevState) => {
+            const mapArr = event.map((item) => item.value);
+            if (inputPrice || selectRating?.length) {
+              return prevState.filter((arr) => arr.hotel.content.hotelFacilities.some((item) => mapArr.includes(item)));
+            } else if (mapArr.length) {
+              return dataFromApi.filter((arr) =>
+                arr.hotel.content.hotelFacilities.some((item) => mapArr.includes(item))
+              );
+            }
 
-              return dataFromApi;
-            });
-            return filterArr;
+            return dataFromApi;
           });
         }}
         isMulti
