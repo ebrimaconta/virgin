@@ -11,9 +11,6 @@ const InputPrice = styled.input`
 `;
 
 function InputPricingFn({ setData, inputPricing, setInputPricing, dataFromApi }) {
-  useEffect(() => {
-    console.log('checking', inputPricing);
-  }, [inputPricing]);
   return (
     <>
       <Header>Price per person</Header>

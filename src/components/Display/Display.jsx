@@ -1,16 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import DisplayHoliday from './DisplayHoliday/DisplayHoliday';
 import FadeLoader from 'react-spinners/FadeLoader';
 import { SelectRatingFn, InputPricingFn, SelectHotelFacilitiesFn } from '../Filters/';
-
-const ResetButton = styled.button`
-  height: 40px;
-  width: 74px;
-  font-size: 16px;
-  margin-top: 43px;
-  margin-left: 20px;
-`;
 
 const FilterContainter = styled.div`
   display: flex;
@@ -29,6 +21,10 @@ const SubContainter = styled.div`
     width: 10%;
     }
   }
+  &:nth-of-type(3) {
+    width: 20%;
+    }
+  }
 `;
 
 const Spinner = styled.div`
@@ -42,8 +38,8 @@ function Display() {
   const [data, setData] = useState();
   const [dataFromApi, setDataFromApi] = useState();
   const [selectRating, setSelectRating] = useState();
-  const [inputPricing, setInputPricing] = useState();
-  const [selectHotelFacilities, setSelectHotelFacilities] = useState();
+  const [inputPricing, setInputPricing] = useState(0);
+  const [selectHotelFacilities] = useState();
   const [getAllStarRating, setAllStarRating] = useState();
 
   const fetchData = useCallback(async () => {
@@ -87,6 +83,8 @@ function Display() {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const formRef = useRef();
+
   const propsRatingNHotel = {
     setData: setData,
     inputPrice: inputPricing,
@@ -95,6 +93,7 @@ function Display() {
     selectRating: selectRating,
     setSelectRating: setSelectRating,
     getAllStarRating: getAllStarRating,
+    formRef: formRef,
   };
   const propsPricing = {
     setData: setData,
@@ -112,28 +111,19 @@ function Display() {
   }
   return (
     <>
-      <FilterContainter>
-        <SubContainter>
-          <SelectRatingFn {...propsRatingNHotel} />
-        </SubContainter>{' '}
-        <SubContainter>
-          <InputPricingFn {...propsPricing} />
-        </SubContainter>
-        <SubContainter>
-          <SelectHotelFacilitiesFn {...propsRatingNHotel} />
-        </SubContainter>
-        <SubContainter>
-          <ResetButton
-            onClick={() => {
-              setSelectRating('');
-              setInputPricing('');
-              setSelectHotelFacilities([]);
-            }}
-          >
-            Reset
-          </ResetButton>
-        </SubContainter>
-      </FilterContainter>
+      <form ref={formRef}>
+        <FilterContainter>
+          <SubContainter>
+            <SelectRatingFn {...propsRatingNHotel} />
+          </SubContainter>{' '}
+          <SubContainter>
+            <InputPricingFn {...propsPricing} />
+          </SubContainter>
+          <SubContainter>
+            <SelectHotelFacilitiesFn {...propsRatingNHotel} />
+          </SubContainter>
+        </FilterContainter>
+      </form>
       <DisplayHoliday holidays={data} />
     </>
   );

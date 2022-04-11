@@ -21,6 +21,7 @@ function SelectRatingFn({
     <>
       <Header>Star Rating</Header>
       <SelectRating
+        id='select'
         value={selectRating}
         onChange={(event) => {
           setSelectRating(event.target.value);
@@ -31,16 +32,16 @@ function SelectRatingFn({
               } else {
                 return dataFromApi.filter((arr) => arr.hotel.content.starRating === event.target.value);
               }
+            } else {
+              return dataFromApi;
             }
-
-            return dataFromApi;
           });
         }}
       >
         <option value=''>Rating</option>
         {getAllStarRating.map((item) => (
           <option key={item} value={item}>
-            {item ? item : 'No Rating'}
+            {item}
           </option>
         ))}
       </SelectRating>
