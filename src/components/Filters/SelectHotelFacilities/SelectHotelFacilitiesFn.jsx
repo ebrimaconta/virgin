@@ -70,7 +70,6 @@ function SelectHotelFacilitiesFn({ setData, inputPrice, selectRating, dataFromAp
             e.preventDefault();
             setValueHotelFacilities([]);
             setData(dataFromApi);
-            document.getElementById('select').getElementsByTagName('option')[0].selected = 'selected';
             formRef.current.reset();
           }}
         >
