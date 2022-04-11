@@ -1,10 +1,12 @@
 import styled from 'styled-components';
-import { Header } from '../Display/Display';
+import { Header } from '../../Display/Display';
 
 const InputPrice = styled.input`
   height: 34px;
   border-radius: 5px;
   padding: 0px 7px;
+  font-size: 16px;
+  width: 42%;
 `;
 
 function InputPricingFn({ setData, inputPricing, setInputPricing, dataFromApi }) {

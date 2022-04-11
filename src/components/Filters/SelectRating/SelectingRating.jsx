@@ -1,9 +1,22 @@
-import { Header } from '../Display/Display';
+import { Header } from '../../Display/Display';
 import styled from 'styled-components';
 
-const SelectRating = styled.select``;
+const SelectRating = styled.select`
+  height: 39px;
+  width: 70%;
+  text-align: center;
+  font-size: 16px;
+`;
 
-function SelectRatingFn({ setData, inputPrice, selectHotelFacilities, dataFromApi, selectRating, setSelectRating }) {
+function SelectRatingFn({
+  setData,
+  getAllStarRating,
+  inputPrice,
+  selectHotelFacilities,
+  dataFromApi,
+  selectRating,
+  setSelectRating,
+}) {
   return (
     <>
       <Header>Star Rating</Header>
@@ -19,13 +32,17 @@ function SelectRatingFn({ setData, inputPrice, selectHotelFacilities, dataFromAp
                 return dataFromApi.filter((arr) => arr.hotel.content.starRating === event.target.value);
               }
             }
+
+            return dataFromApi;
           });
         }}
       >
         <option value=''>Rating</option>
-        <option value='3'>3</option>
-        <option value='4'>4</option>
-        <option value='5'>5</option>
+        {getAllStarRating.map((item) => (
+          <option key={item} value={item}>
+            {item ? item : 'No Rating'}
+          </option>
+        ))}
       </SelectRating>
     </>
   );

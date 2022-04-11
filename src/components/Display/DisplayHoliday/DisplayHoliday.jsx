@@ -16,7 +16,7 @@ const HolidayDescription = styled.div`
 function DisplayHoliday({ holidays }) {
   return (
     <>
-      {holidays.length >= 1 ? (
+      {holidays?.length >= 1 ? (
         holidays.map((holiday, index) => {
           return (
             <Display key={index}>

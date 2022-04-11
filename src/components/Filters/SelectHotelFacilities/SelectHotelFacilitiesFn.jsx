@@ -1,7 +1,8 @@
-import { Header } from '../Display/Display';
+import { Header } from '../../Display/Display';
+
 import ReactSelect from 'react-select';
 
-function SelectRatingFn({ setData, setSelectHotelFacilities, selectHotelFacilities, dataFromApi}) {
+function SelectHotelFacilitiesFn({ setData, setSelectHotelFacilities, selectHotelFacilities, dataFromApi }) {
   const options = [
     { value: 'Restaurant', label: 'Restaurant' },
     { value: 'Bar', label: 'Bar' },
@@ -10,7 +11,7 @@ function SelectRatingFn({ setData, setSelectHotelFacilities, selectHotelFaciliti
     { value: 'Fitness Centre/Gym', label: 'Fitness Centre/Gym' },
     { value: 'Laundry Service', label: 'Laundry Service' },
   ];
-
+  console.log('checking', selectHotelFacilities);
   return (
     <>
       <Header>Hotel facilities</Header>
@@ -37,4 +38,4 @@ function SelectRatingFn({ setData, setSelectHotelFacilities, selectHotelFaciliti
   );
 }
 
-export default SelectRatingFn;
+export default SelectHotelFacilitiesFn;

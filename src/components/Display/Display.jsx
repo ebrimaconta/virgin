@@ -2,8 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import DisplayHoliday from './DisplayHoliday/DisplayHoliday';
 import FadeLoader from 'react-spinners/FadeLoader';
-import ReactSelect from 'react-select';
-import { SelectRatingFn, InputPricing, SelectHotelFacilitiesFn } from '../Filters/';
+import { SelectRatingFn, InputPricingFn, SelectHotelFacilitiesFn } from '../Filters/';
 
 const ResetButton = styled.button`
   height: 40px;
@@ -45,15 +44,7 @@ function Display() {
   const [selectRating, setSelectRating] = useState();
   const [inputPricing, setInputPricing] = useState();
   const [selectHotelFacilities, setSelectHotelFacilities] = useState();
-
-  const options = [
-    { value: 'Restaurant', label: 'Restaurant' },
-    { value: 'Bar', label: 'Bar' },
-    { value: 'Free Parking', label: 'Free Parking' },
-    { value: 'Safety Deposit Box', label: 'Safety Deposit Box' },
-    { value: 'Fitness Centre/Gym', label: 'Fitness Centre/Gym' },
-    { value: 'Laundry Service', label: 'Laundry Service' },
-  ];
+  const [getAllStarRating, setAllStarRating] = useState();
 
   const fetchData = useCallback(async () => {
     try {
@@ -79,9 +70,14 @@ function Display() {
         body: JSON.stringify(data),
       });
       const responseData = await fetchDataFromApi.json();
+
+      const mapGetStarRating = responseData.holidays.map((arr) => arr.hotel.content.starRating);
+      const uniqueStarRating = [...new Set(mapGetStarRating.filter((item) => item))];
+      const sortStarRating = uniqueStarRating.sort((a, b) => a - b);
+
+      setAllStarRating(sortStarRating);
       setDataFromApi(responseData.holidays);
       setData(responseData.holidays);
-
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -97,6 +93,7 @@ function Display() {
     dataFromApi: dataFromApi,
     selectRating: selectRating,
     setSelectRating: setSelectRating,
+    getAllStarRating: getAllStarRating,
   };
   const propsPricing = {
     setData: setData,
@@ -109,6 +106,7 @@ function Display() {
     inputPrice: inputPricing,
     setInputPricing: setInputPricing,
     dataFromApi: dataFromApi,
+    setSelectHotelFacilities: setSelectHotelFacilities,
   };
 
   if (loading) {
@@ -125,7 +123,7 @@ function Display() {
           <SelectRatingFn {...propsRating} />
         </SubContainter>{' '}
         <SubContainter>
-          <InputPricing {...propsPricing} />
+          <InputPricingFn {...propsPricing} />
         </SubContainter>
         <SubContainter>
           <SelectHotelFacilitiesFn {...propsHotel} />
