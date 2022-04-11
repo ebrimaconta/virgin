@@ -8,15 +8,7 @@ const SelectRating = styled.select`
   font-size: 16px;
 `;
 
-function SelectRatingFn({
-  setData,
-  getAllStarRating,
-  inputPrice,
-  selectHotelFacilities,
-  dataFromApi,
-  selectRating,
-  setSelectRating,
-}) {
+function SelectRatingFn({ setData, getAllStarRating, dataFromApi, selectRating, setSelectRating }) {
   return (
     <>
       <Header>Star Rating</Header>
@@ -26,10 +18,10 @@ function SelectRatingFn({
           setData((prevState) => {
             if (event.target.value) {
               setSelectRating(event.target.value);
-              if (inputPrice || selectHotelFacilities?.length) {
-                return prevState.filter((arr) => arr.hotel.content.starRating === event.target.value);
-              } else {
+              if (selectRating) {
                 return dataFromApi.filter((arr) => arr.hotel.content.starRating === event.target.value);
+              } else {
+                return prevState.filter((arr) => arr.hotel.content.starRating === event.target.value);
               }
             } else {
               return dataFromApi;

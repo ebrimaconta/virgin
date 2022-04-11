@@ -17,6 +17,14 @@ function InputPricingFn({ setData, inputPricing, setInputPricing, dataFromApi })
         type='number'
         defaultValue={inputPricing}
         min={0}
+        onKeyDown={(event) => {
+          if (event.keyCode === 8 || event.keyCode === 46) {
+            setData(() => {
+              const filterArr = dataFromApi.filter((arr) => event.target.value <= arr.pricePerPerson);
+              return filterArr;
+            });
+          }
+        }}
         onChange={(event) => {
           setData((prevState) => {
             if (event.target.value) {
