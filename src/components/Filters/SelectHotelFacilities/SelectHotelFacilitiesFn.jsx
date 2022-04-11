@@ -1,6 +1,6 @@
 import { Header } from '../../Display/Display';
-import { useState } from 'react';
-import ReactSelect from 'react-select';
+import React, { useState } from 'react';
+import ReactSelect, { components } from 'react-select';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -26,6 +26,14 @@ function SelectHotelFacilitiesFn({ setData, inputPrice, selectRating, dataFromAp
     { value: 'Fitness Centre/Gym', label: 'Fitness Centre/Gym' },
     { value: 'Laundry Service', label: 'Laundry Service' },
   ];
+  const MultiValueRemove = (props) => {
+    return (
+      <components.MultiValueRemove {...props}>
+        <div> </div>
+      </components.MultiValueRemove>
+    );
+  };
+  const ClearIndicator = () => null;
 
   return (
     <>
@@ -52,14 +60,14 @@ function SelectHotelFacilitiesFn({ setData, inputPrice, selectRating, dataFromAp
             });
           }}
           components={{
-            ClearIndicator: null,
+            ClearIndicator,
+            MultiValueRemove,
           }}
           isMulti
         />
         <ResetButton
           onClick={(e) => {
             e.preventDefault();
-
             setValueHotelFacilities([]);
             setData(dataFromApi);
             document.getElementById('select').getElementsByTagName('option')[0].selected = 'selected';
