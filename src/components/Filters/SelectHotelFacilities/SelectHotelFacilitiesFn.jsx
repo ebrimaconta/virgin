@@ -59,8 +59,10 @@ function SelectHotelFacilitiesFn({ setData, inputPrice, selectRating, dataFromAp
         <ResetButton
           onClick={(e) => {
             e.preventDefault();
+
             setValueHotelFacilities([]);
             setData(dataFromApi);
+            document.getElementById('select').getElementsByTagName('option')[0].selected = 'selected';
             formRef.current.reset();
           }}
         >

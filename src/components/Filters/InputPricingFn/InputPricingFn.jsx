@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
 import { Header } from '../../Display/Display';
 
 const InputPrice = styled.input`

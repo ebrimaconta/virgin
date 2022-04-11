@@ -22,11 +22,10 @@ function SelectRatingFn({
       <Header>Star Rating</Header>
       <SelectRating
         id='select'
-        value={selectRating}
         onChange={(event) => {
-          setSelectRating(event.target.value);
           setData((prevState) => {
             if (event.target.value) {
+              setSelectRating(event.target.value);
               if (inputPrice || selectHotelFacilities?.length) {
                 return prevState.filter((arr) => arr.hotel.content.starRating === event.target.value);
               } else {
