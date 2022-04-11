@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import DisplayHoliday from './DisplayHoliday/DisplayHoliday';
 import FadeLoader from 'react-spinners/FadeLoader';
@@ -42,7 +42,7 @@ function Display() {
   const [selectHotelFacilities] = useState();
   const [getAllStarRating, setAllStarRating] = useState();
 
-  const fetchData = useCallback(async () => {
+  const fetchData = async () => {
     try {
       const data = {
         bookingType: 'hotel',
@@ -75,10 +75,11 @@ function Display() {
       setDataFromApi(responseData.holidays);
       setData(responseData.holidays);
       setLoading(false);
+
     } catch (e) {
-      console.log(e);
+      console.log('Error from fetch', e);
     }
-  }, []);
+  };
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
